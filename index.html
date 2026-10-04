@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6cbd4">
+<title>耳つぼケア レシピ帳</title>
+<style>
+:root{--pink:#e36d8d;--deep:#6d3144;--cream:#fffaf7;--line:#f0d9df;--ink:#392d31;--sub:#806c73}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;color:var(--ink);background:linear-gradient(180deg,#f8d8df 0,#fff7f8 36%,#fff 100%);min-height:100vh}
+.wrap{max-width:620px;margin:auto;padding:18px 14px 90px}.hero{background:rgba(255,255,255,.82);border:1px solid #fff;border-radius:28px;padding:18px;box-shadow:0 14px 35px rgba(105,49,68,.10);overflow:hidden;position:relative}
+.hero h1{font-size:27px;margin:0 0 4px;color:var(--deep)}.hero p{margin:0;color:var(--sub);font-size:13px}.mascot{position:absolute;right:-8px;bottom:-15px;width:112px}
+.count{margin-top:13px;display:inline-block;background:#fff0f4;color:var(--deep);padding:7px 12px;border-radius:999px;font-weight:800;font-size:13px}
+.search{position:sticky;top:0;z-index:5;padding:12px 0 8px;background:linear-gradient(#fff7f8 70%,rgba(255,247,248,0))}
+.search input{width:100%;border:1px solid var(--line);border-radius:18px;padding:15px 16px;font-size:16px;background:white;outline:none;box-shadow:0 7px 20px rgba(80,30,50,.06)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{border:1px solid var(--line);background:#fff;border-radius:19px;padding:15px;text-align:left;box-shadow:0 6px 16px rgba(80,30,50,.05);cursor:pointer;min-height:92px}.card:active{transform:scale(.98)}
+.no{font-size:11px;font-weight:800;color:var(--pink)}.ttl{font-size:17px;font-weight:900;margin-top:5px;line-height:1.25}.small{font-size:11px;color:var(--sub);margin-top:6px}
+.empty{text-align:center;padding:30px;color:var(--sub)}
+.modal{position:fixed;inset:0;background:rgba(46,26,33,.45);z-index:20;display:none;align-items:flex-end;justify-content:center}.modal.on{display:flex}
+.sheet{background:var(--cream);width:100%;max-width:620px;max-height:88vh;overflow:auto;border-radius:28px 28px 0 0;padding:12px 16px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(0,0,0,.15)}
+.handle{width:48px;height:5px;border-radius:9px;background:#d9c8cd;margin:0 auto 14px}.sheethead{display:flex;justify-content:space-between;gap:10px;align-items:start}.sheet h2{margin:0;color:var(--deep);font-size:25px}.close{border:0;background:#f3e5e9;border-radius:50%;width:38px;height:38px;font-size:21px;color:var(--deep)}
+.point{background:white;border:1px solid var(--line);border-radius:17px;padding:13px 14px;margin:10px 0}.point b{display:block;font-size:17px;color:var(--deep);margin-bottom:4px}.point span{font-size:14px;line-height:1.55;color:#55464b}.tag{display:inline-block;font-size:11px;background:#ffe7ee;color:#8a3b53;border-radius:999px;padding:4px 8px;margin-left:5px}
+.note{margin-top:14px;padding:12px;border-radius:14px;background:#fff1d9;font-size:12px;line-height:1.6;color:#69543b}
+.source{text-align:center;color:#9b858d;font-size:10px;margin:22px 5px 0;line-height:1.6}
+@media(min-width:520px){.grid{grid-template-columns:repeat(3,1fr)}}
+</style></head>
+<body><main class="wrap">
+<section class="hero"><h1>耳つぼケア<br>レシピ帳</h1><p>症状・目的からサッと探す。</p><span class="count">全30レシピ</span><img class="mascot" src="mcs_ear_front.PNG" alt=""></section>
+<div class="search"><input id="q" type="search" placeholder="例：肩こり、神門、むくみ"></div>
+<section id="grid" class="grid"></section>
+<div id="empty" class="empty" hidden>見つからへんかったで。</div>
+<p class="source">教材写真をもとにレシピ内容を整理した学習・確認用アプリです。<br>医療上の診断・治療を目的とするものではありません。</p>
+</main>
+<div id="modal" class="modal"><section class="sheet"><div class="handle"></div><div class="sheethead"><div><div id="mno" class="no"></div><h2 id="mtitle"></h2></div><button class="close" id="close">×</button></div><div id="points"></div><div class="note">左右指定や「裏」「刺激のみ」の表記は教材記載に合わせています。</div></section></div>
+<script>
+const recipes=[{"no": 1, "title": "小顔美人", "points": [{"name": "腎炎点", "desc": "むくみ・小顔"}, {"name": "かかん", "desc": "顎の釣り上げ"}, {"name": "面頬", "desc": "頬の釣り上げ"}]}, {"no": 2, "title": "ツヤ肌", "points": [{"name": "神門", "desc": "ストレス緩和、自律神経の調整"}, {"name": "副腎", "desc": "副腎皮質ホルモンの調整"}, {"name": "肺", "desc": "水分調整、皮膚炎"}, {"name": "大腸", "desc": "代謝、便秘"}]}, {"no": 3, "title": "風邪予防", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "肺", "desc": "水分調整、風邪、気の巡り"}, {"name": "副腎", "desc": "副腎皮質ホルモンの調整"}]}, {"no": 4, "title": "花粉対策", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "肺", "desc": "水分調整、風邪、皮膚炎、気の巡り"}, {"name": "副腎", "desc": "副腎皮質ホルモンの調整"}, {"name": "内鼻（裏）", "desc": "鼻水、鼻づまり"}, {"name": "目", "desc": "目のかゆみ"}]}, {"no": 5, "title": "肩こり", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "肩", "desc": "肩こり"}, {"name": "肝（右）", "desc": "血行促進"}]}, {"no": 6, "title": "腰痛", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "腰仙椎", "desc": "腰痛"}, {"name": "坐骨神経", "desc": "坐骨神経痛"}]}, {"no": 7, "title": "目の疲れ", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "肝（右）", "desc": "血行促進、目の疲れ、不眠"}, {"name": "目", "desc": "目の疲れ"}]}, {"no": 8, "title": "頑張れ受験生", "points": [{"name": "大脳皮質下（裏）", "desc": "集中力アップ"}, {"name": "目", "desc": "目の疲れ"}, {"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "副腎", "desc": "抵抗力アップ"}]}, {"no": 9, "title": "むくみ", "points": [{"name": "肺", "desc": "水分調整、腎の働きを助ける"}, {"name": "腎", "desc": "めまい、耳鳴り、むくみ、難聴、デトックス"}, {"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}]}, {"no": 10, "title": "ダイエット", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "飢点", "desc": "食欲を抑える"}, {"name": "肺", "desc": "水分調整、気の巡り"}, {"name": "大腸", "desc": "代謝、便秘"}, {"name": "小腸", "desc": "消化、吸収"}, {"name": "腎", "desc": "むくみ、デトックス"}]}, {"no": 11, "title": "耳鳴り", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "耳迷根（裏）", "desc": "自律神経の調整"}, {"name": "腎", "desc": "めまい、耳鳴り、むくみ、難聴、デトックス"}, {"name": "内耳", "desc": "メニエル、めまい、耳鳴り、中耳炎"}]}, {"no": 12, "title": "めまい", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "耳迷根（裏）", "desc": "自律神経の調整"}, {"name": "腎", "desc": "水分調整"}, {"name": "内耳", "desc": "メニエル、めまい"}]}, {"no": 13, "title": "不眠", "points": [{"name": "大脳皮質下（裏）", "desc": "神経を落ち着かせる"}, {"name": "目", "desc": "目の疲れ"}, {"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "肝（右）", "desc": "気分を静める、不眠"}]}, {"no": 14, "title": "ファイト一発", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "肝（右）", "desc": "血行促進"}, {"name": "副腎", "desc": "副腎皮質ホルモンの調整"}]}, {"no": 15, "title": "妊活", "points": [{"name": "内生殖器", "desc": "月経不順、生理痛"}, {"name": "腰仙椎", "desc": "腰痛"}, {"name": "内分泌（刺激のみ）", "desc": "ホルモンの調整"}, {"name": "肝（右）", "desc": "血行促進"}]}, {"no": 16, "title": "顎関節症", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "側頭", "desc": "食いしばり"}, {"name": "顎", "desc": "顎関節症、歯ぎしり"}, {"name": "頸椎", "desc": "首の緊張緩和"}]}, {"no": 17, "title": "四十肩、五十肩", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "肩", "desc": "肩の痛み"}, {"name": "腕（表）", "desc": "四十肩、五十肩"}, {"name": "腕（裏）", "desc": "四十肩、五十肩"}]}, {"no": 18, "title": "偏頭痛", "points": [{"name": "腎", "desc": "むくみ、デトックス"}, {"name": "肺", "desc": "水分調整、気の巡り"}, {"name": "側頭", "desc": "頭痛"}, {"name": "頸椎", "desc": "首の緊張緩和"}, {"name": "目", "desc": "閃輝暗点"}]}, {"no": 19, "title": "鼻炎", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "副腎", "desc": "副腎皮質ホルモンの調整"}, {"name": "内鼻", "desc": "鼻水、鼻詰まり"}, {"name": "肺", "desc": "水分調整、風邪"}, {"name": "大腸", "desc": "便秘、腸炎、代謝"}]}, {"no": 20, "title": "咳", "points": [{"name": "咽喉", "desc": "喉の痛み"}, {"name": "肺", "desc": "水分調整、風邪"}, {"name": "気管", "desc": "気管支炎"}]}, {"no": 21, "title": "頻尿", "points": [{"name": "腎", "desc": "腎炎、腎機能障害、膀胱炎"}, {"name": "膀胱", "desc": "膀胱炎、尿もれ、頻尿"}, {"name": "大脳皮質下", "desc": "脳の誤作動"}]}, {"no": 22, "title": "いびき・睡眠時無呼吸症候群", "points": [{"name": "咽喉", "desc": "喉を拡げる"}, {"name": "気管", "desc": "気管を拡げる"}, {"name": "肺", "desc": "気の巡り、風邪"}, {"name": "大脳皮質下", "desc": "精神の高ぶりを抑える"}]}, {"no": 23, "title": "乗り物酔い", "points": [{"name": "耳迷根", "desc": "めまい"}, {"name": "後頭", "desc": "後頭部の痛み、乗り物酔い"}, {"name": "内耳", "desc": "三半規管の調整"}, {"name": "胃", "desc": "胃の不快感"}]}, {"no": 24, "title": "蕁麻疹", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "副腎", "desc": "副腎皮質ホルモンの調整"}, {"name": "肺", "desc": "水分調整、皮膚炎、気の巡り"}]}, {"no": 25, "title": "口内炎", "points": [{"name": "神門", "desc": "ストレス緩和、消炎、自律神経の調整"}, {"name": "舌", "desc": "潰瘍性の口内炎、舌炎"}, {"name": "口", "desc": "口内炎"}, {"name": "胃", "desc": "慢性胃炎、消化不良"}, {"name": "脾（左）", "desc": "口内炎、消化吸収"}]}, {"no": 26, "title": "脱毛症", "points": [{"name": "肛門", "desc": "発毛"}, {"name": "腎", "desc": "脱毛症、円形脱毛症"}, {"name": "大腸", "desc": "代謝"}, {"name": "肺", "desc": "気の巡り"}]}, {"no": 27, "title": "PMS", "points": [{"name": "内生殖器", "desc": "月経不順、生理痛"}, {"name": "腰仙椎", "desc": "腰痛"}, {"name": "腎", "desc": "月経トラブル"}, {"name": "肝（右）", "desc": "血行促進、月経痛、貧血"}]}, {"no": 28, "title": "目の下のクマ", "points": [{"name": "肝（右）", "desc": "血行促進、貧血、不眠"}, {"name": "目", "desc": "目の疲れ"}, {"name": "後頭", "desc": "後頭部の緊張緩和"}]}, {"no": 29, "title": "ニキビ", "points": [{"name": "肺", "desc": "水分調整、皮膚炎、気の巡り"}, {"name": "大腸", "desc": "便秘、腸炎、代謝"}, {"name": "内分泌（刺激のみ）", "desc": "ホルモンの調整"}]}, {"no": 30, "title": "シミ", "points": [{"name": "肝（右）", "desc": "血行促進"}, {"name": "肺", "desc": "水分調整、皮膚の潤い、気の巡り"}, {"name": "内分泌（刺激のみ）", "desc": "ホルモンの調整"}]}];
+const grid=document.getElementById('grid'), q=document.getElementById('q'), empty=document.getElementById('empty');
+function esc(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function render(){
+ const v=q.value.trim().toLowerCase();
+ const list=recipes.filter(r=>!v || r.title.toLowerCase().includes(v) || r.points.some(p=>(p.name+' '+p.desc).toLowerCase().includes(v)));
+ grid.innerHTML=list.map(r=>`<button class="card" onclick="openRecipe(${r.no})"><div class="no">RECIPE ${String(r.no).padStart(2,'0')}</div><div class="ttl">${esc(r.title)}</div><div class="small">${r.points.length}ツボ</div></button>`).join('');
+ empty.hidden=!!list.length;
+}
+function openRecipe(no){
+ const r=recipes.find(x=>x.no===no);
+ document.getElementById('mno').textContent='RECIPE '+String(r.no).padStart(2,'0');
+ document.getElementById('mtitle').textContent=r.title;
+ document.getElementById('points').innerHTML=r.points.map((p,i)=>`<div class="point"><b>${i+1}. ${esc(p.name)}${p.name.includes('刺激のみ')?'<span class="tag">刺激のみ</span>':''}</b><span>${esc(p.desc)}</span></div>`).join('');
+ document.getElementById('modal').classList.add('on'); document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modal').classList.remove('on');document.body.style.overflow=''}
+q.addEventListener('input',render);document.getElementById('close').onclick=closeModal;
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+render();
+</script></body></html>
