@@ -8,8 +8,8 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>耳つぼケア レシピ帳</title>
-<!-- build: 20261004-10 -->
-<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.JPG?v=20261004-10">
+<!-- build: 20261004-11 -->
+<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.JPG?v=20261004-11">
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f7cfd3;color:#382d2b;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}
@@ -43,7 +43,7 @@ h1{font-size:28px;color:#7e3049;text-align:center;margin:4px 0}
 <body>
 <div class="wrap">
 <section id="menu" class="card">
-<img class="logo" src="mcs_logo.PNG?v=20261004-10" alt="MCS">
+<img class="logo" src="mcs_logo.PNG?v=20261004-11" alt="MCS">
 <h1>耳つぼケア レシピ帳</h1>
 <div class="sub">気になる項目をポチッ👆<br>耳のどこを使うか、パッと確認できるで</div>
 <div id="grid" class="grid"></div>
@@ -52,9 +52,8 @@ h1{font-size:28px;color:#7e3049;text-align:center;margin:4px 0}
 <section id="detail" class="card">
 <button id="backBtn" class="back">← レシピ一覧</button>
 <div id="recipeTitle" class="title"></div>
-<div class="ear"><img id="earImg" src="ear_base.PNG?v=20261004-10" alt="耳"><div id="dots"></div></div>
-<div class="legend"><span><i class="ball frontB"></i>表</span><span><i class="ball backB"></i>裏</span><span><i class="ball stimB"></i>刺激のみ</span></div>
-<img id="recipeChara" class="recipeChara" src="mcs_start.PNG?v=20261004-10" alt="">
+<div class="ear"><img id="earImg" src="ear_base.PNG?v=20261004-11" alt="耳"><div id="dots"></div></div>
+<img id="recipeChara" class="recipeChara" src="mcs_start.PNG?v=20261004-11" alt="">
 <div id="rows"></div>
 <div class="note">※基本座標「耳つぼ どこやねん！」以外の耳つぼは協会テキストを基準にしています。</div>
 </section>
@@ -76,7 +75,7 @@ const earImgEl=document.getElementById("earImg");
 const recipeCharaEl=document.getElementById("recipeChara");
 menuEl.style.display="none";
 detailEl.style.display="block";
-recipeCharaEl.src=charaImages[Math.floor(Math.random()*charaImages.length)]+"?v=20261004-10";
-recipeTitleEl.textContent=`レシピ${r.n}：${r.t}`;dotsEl.innerHTML="";rowsEl.innerHTML="";earImgEl.src="ear_base.PNG?v=20261004-10";r.p.forEach((x,idx)=>{let name=x[0],base=pointName(name),mode=x[2]||"front",custom=x[3]||null,isBack=mode==="back"||name.includes("（裏）"),pos=custom||(!isBack?F[base]:null);if(pos){let d=document.createElement("span");d.className="dot "+(mode==="stim"?"stim":"front");d.style.left=pos[0]+"%";d.style.top=pos[1]+"%";d.title=name;dotsEl.appendChild(d)}let rr=document.createElement("div");rr.className="row";let extra=isBack?'<div style="font-size:12px;color:#8060ad;margin-top:4px">※裏側のツボ</div>':(!pos?'<div style="font-size:12px;color:#a16a7c;margin-top:4px">※位置は協会テキストで確認</div>':"");rr.innerHTML=`<b>${idx+1}. ${name}</b><div class="effect">${x[1]}</div>${extra}`;rowsEl.appendChild(rr)});window.scrollTo({top:0,behavior:"smooth"})}
+recipeCharaEl.src=charaImages[Math.floor(Math.random()*charaImages.length)]+"?v=20261004-11";
+recipeTitleEl.textContent=`レシピ${r.n}：${r.t}`;dotsEl.innerHTML="";rowsEl.innerHTML="";earImgEl.src="ear_base.PNG?v=20261004-11";r.p.forEach((x,idx)=>{let name=x[0],base=pointName(name),mode=x[2]||"front",custom=x[3]||null,isBack=mode==="back"||name.includes("（裏）"),pos=custom||(!isBack?F[base]:null);if(pos){let d=document.createElement("span");d.className="dot "+(mode==="stim"?"stim":"front");d.style.left=pos[0]+"%";d.style.top=pos[1]+"%";d.title=name;dotsEl.appendChild(d)}let rr=document.createElement("div");rr.className="row";let extra=isBack?'<div style="font-size:12px;color:#8060ad;margin-top:4px">※裏側のツボ</div>':(!pos?'<div style="font-size:12px;color:#a16a7c;margin-top:4px">※位置は協会テキストで確認</div>':"");rr.innerHTML=`<b>${idx+1}. ${name}</b><div class="effect">${x[1]}</div>${extra}`;rowsEl.appendChild(rr)});window.scrollTo({top:0,behavior:"smooth"})}
 document.getElementById("backBtn").onclick=()=>{document.getElementById("detail").style.display="none";document.getElementById("menu").style.display="block";window.scrollTo({top:0,behavior:"smooth"})};renderList();
 </script></body></html>
